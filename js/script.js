@@ -6,6 +6,16 @@ let questions = [
         correctAnswer: "JS"
     },
     {
+        question: "В какой программе вы работаете?",
+        options: ["VisualStudioCode", "InkScape", "Java", "C++"],
+        correctAnswer: "JS"
+    },
+    {
+        question: "Какой язык программирования вы изучаете?",
+        options: ["JS", "Python", "Java", "C++"],
+        correctAnswer: "JS"
+    },
+    {
         question: "Какой язык программирования вы изучаете?",
         options: ["JS", "Python", "Java", "C++"],
         correctAnswer: "JS"
@@ -20,29 +30,59 @@ let questions = [
 let currentQuestion = 0; // Текущий вопрос
 let correctAnswers = 0; // Количество правильных ответов
 
-//функция для отображения текущего вопросв и вариантов ответа
+// Функция для отображения текущего вопроса и вариантов ответов
 function displayQuestion() {
-    let questionElement = document.getElementById("quetion"); //Получим блок куда размещать вопросы
-    questionElement.textContent = ` ${currentQuestion + 1}: ${questions[currentQuestion].question}`
-
+    let questionElement = document.getElementById("question"); //Получим блок куда размещать вопрос
+    questionElement.textContent = `Вопрос ${currentQuestion + 1}: ${questions[currentQuestion].question}`
+    // Получим блок кнопок:
     let optionsElement = document.getElementById("options");
-    //Очистим блок с кнопками
+    // Очистим блок с кнопками:
     optionsElement.innerHTML = "";
 
-    //Массив ответов
-    let optionArray = questions[currentQuestion].options;
+    // Массив ответов
+    let optionsArray = questions[currentQuestion].options;
 
-    //Создаём кнопки с вариантами ответов и привязать к ним функцию nextQuestion
-    optionArray.forEach((option) => {
+    // Создать кнопки с вариантами ответов и привязать к ним функцию nextQuestion
+    optionsArray.forEach((option) => {
         let button = document.createElement('button');
         optionsElement.append(button);
         button.textContent = option;
     })
+    // При клике на блок с кнопками:
     optionsElement.addEventListener('click', (e) => {
+        // Получаем в переменную кнопку на которую кликнули:
         let target = e.target;
-        // проверка ответов на кореткность и переход к след вопросу
-        nextQuestion(target.textContent)
-    })
+        // Вызовем функцию проверки ответа и перехода к следующему вопросу (в аргумент функции передаем текст ответа):
+        nextQuestion(target.textContent);
+    }, { once: true });
+}
+
+//Функция для перехода к следующему вопросу
+function nextQuestion(answer) {
+    //Если переданый ответ равен коректному, то
+    if (answer === questions[currentQuestion].correctAnswer) {
+        //Увеличеваем на единицу кол-во правильных ответов
+        correctAnswers++;
+    }
+    //Переходим к следующему вопросу
+    currentQuestion++;
+    //Если номер текущ вопросу меньше кол-ва вопросов, то отображаем следующ вопрос
+    if (currentQuestion < questions.length) {
+        displayQuestion();
+    } else {
+        ///иначе
+        displayResult();
+    }
+}
+
+//Функция отображения результата текста
+function displayResult() {
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+    const resultElement = document.getElementById("result");
+    questionElement.style.display = "none";
+    optionsElement.style.display = "none"
+    resultElement.textContent = `Правильных ответов:${correctAnswers} из ${questions.length}`
 }
 
 displayQuestion();
