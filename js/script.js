@@ -6,8 +6,8 @@ let questions = [
         correctAnswer: "JS"
     },
     {
-        question: "В какой программе вы работаете?",
-        options: ["VisualStudioCode", "InkScape", "Java", "C++"],
+        question: "Какой язык программирования вы изучаете?",
+        options: ["JS", "Python", "Java", "C++"],
         correctAnswer: "JS"
     },
     {
@@ -82,7 +82,11 @@ function displayResult() {
     const resultElement = document.getElementById("result");
     questionElement.style.display = "none";
     optionsElement.style.display = "none"
-    resultElement.textContent = `Правильных ответов:${correctAnswers} из ${questions.length}`
+    let userName = prompt(" Введите ваше имя ")
+    // resultElement.textContent = `Правильных ответов:${correctAnswers} из ${questions.length}`
+    resultElement.textContent = (userName + " вы ответили на " + correctAnswers + " правильных ответов " + " из " + questions.length)
 }
+
+
 
 displayQuestion();
