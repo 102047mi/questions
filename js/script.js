@@ -24,11 +24,17 @@ let questions = [
         question: "Какой язык программирования вы изучаете?",
         options: ["JS", "Python", "Java", "C++"],
         correctAnswer: "JS"
+    },
+    {
+        question: "Какой язык программирования вы изучаете?",
+        options: ["JS", "Python", "Java", "C++"],
+        correctAnswer: "JS"
     }
 ];
 
 let currentQuestion = 0; // Текущий вопрос
 let correctAnswers = 0; // Количество правильных ответов
+let incorrectAnswers = 0;// Кол-во неправильных ответов
 
 // Функция для отображения текущего вопроса и вариантов ответов
 function displayQuestion() {
@@ -63,6 +69,8 @@ function nextQuestion(answer) {
     if (answer === questions[currentQuestion].correctAnswer) {
         //Увеличеваем на единицу кол-во правильных ответов
         correctAnswers++;
+    } else {
+        incorrectAnswers++;
     }
     //Переходим к следующему вопросу
     currentQuestion++;
@@ -80,13 +88,22 @@ function displayResult() {
     const questionElement = document.getElementById("question");
     const optionsElement = document.getElementById("options");
     const resultElement = document.getElementById("result");
+    const incorrectElement = document.getElementById("incorrect");
+    const incorrectAnswer = document.getElementById("incorrectAnswers");
     questionElement.style.display = "none";
-    optionsElement.style.display = "none"
-    let userName = prompt(" Введите ваше имя ")
+    optionsElement.style.display = "none";
+    let userName = prompt(" Введите ваше имя ");
+    let score = (correctAnswers / questions.length) * 100
     // resultElement.textContent = `Правильных ответов:${correctAnswers} из ${questions.length}`
-    resultElement.textContent = (userName + " вы ответили на " + correctAnswers + " правильных ответов " + " из " + questions.length)
+    resultElement.textContent = (userName + " вы ответили на " + correctAnswers +
+        " правильных ответов " + " из " + questions.length + " (" + score + "%)");
+    if (incorrectAnswers > 0) {
+        incorrectElement.textContent = `Количество неправильных ответов:${incorrectAnswers}`;
+        incorrectAnswer.forEach
+    } else {
+        incorrectElement.textContent = "Всё решено верно";
+    }
+
 }
-
-
 
 displayQuestion();
